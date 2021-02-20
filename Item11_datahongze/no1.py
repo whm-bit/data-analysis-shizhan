@@ -7,6 +7,10 @@ plt.rcParams['font.sans-serif'] = ['SimHei'] # 指定默认字体
 
 
 def Glod_data():
+    """
+    获取黄金价格和相对应的日期
+    :return:
+    """
 
     sql_gold_trade_code ="select TRADE_CODE from globalcommodityinfo where CATEGORY='黄金'"   # 从globalcommodityinfo表中查询黄金的trade_code
     df_gold_trade_code = pd.read_sql(sql_gold_trade_code,con=db) # 转化为DataFrame数据
@@ -38,6 +42,10 @@ def Glod_data():
     return gold_date,gold_close
 
 def Nird_data():
+    """
+    获取负利率债规模数据和日期
+    :return:
+    """
 
     sql_nird_trade_code = "select TRADE_CODE from globalindexinfo where SEC_NAME like '%负利率债规模%'"
     df_nird_trade_code = pd.read_sql(sql_nird_trade_code,con=db)
@@ -75,9 +83,8 @@ if __name__ == '__main__':
     nird_date,nird_close = Nird_data()
     gold_date,gold_close = Glod_data()
 
-    # plt.plot(gold_date,gold_close,color="red")
-    # plt.plot(nird_date,nird_close,color="black")
-    # plt.show()
+
+    # 画图
     fig, ax1 = plt.subplots()
     ax2 = ax1.twinx()
     ax1.plot(nird_date,nird_close, 'g-')
@@ -88,10 +95,15 @@ if __name__ == '__main__':
     ax1.set_ylabel("负利率债", color='green')
     ax2.set_ylabel("黄金", color='blue')
 
+    plt.title("黄金与负利率债")
+
     plt.show()
 
     db.close()
 
 """
-由图可知：在2019年4月到2020年4月，黄金和负利率债规模指数的整体趋势和波动大致相同，两者息息相关。
+由图可知：
+1，从2019年4月到2020年4月，黄金和负利率债规模指数的整体趋势和波动有很高的相似度，两者息息相关
+2，从2020年3月到2020年4月，黄金呈先上升后下降趋势，波动较大；负利率债呈先下降后上升的趋势，波动较大（在此期间，疫情爆发，说明黄金和负利率债规模指数受时势的影响很大）
+3，从2019年4月到2020年2月，负利率债券规模整体波动较大，而黄金的波动趋势较小
 """

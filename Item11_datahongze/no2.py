@@ -171,15 +171,18 @@ if __name__ == '__main__':
     usgg10_date, usgg10_close = USGG10YR_data()
     # print(len(usgg10_date))
 
-    fig, ax1 = plt.subplots()
+    # 画图
+    fig, ax1 = plt.subplots(1,1,figsize=(10,7))
     ax2 = ax1.twinx()
-    ax1.plot(cl1_date_new, cl1_sub_cl60_close, 'g-')
-    ax2.plot(usgg10_date, usgg10_close, 'b-')
+    ax1.plot(cl1_date_new, cl1_sub_cl60_close,'g-')
+    ax2.plot(usgg10_date, usgg10_close,'b-')
 
     ax1.set_xlabel("时间")
 
     ax1.set_ylabel("WTI升贴水", color='green')
     ax2.set_ylabel("美国10y国债收益率", color='blue')
+
+    plt.title("CL1/CL60价差与美国国债收益率")
 
     plt.show()
 
@@ -187,5 +190,9 @@ if __name__ == '__main__':
 
 
 """
-
+由图可得以下信息：
+1，CL1/CL60价差与美国国债收益率的整体走势和波动相似度很高
+2，从2019年8月到2019年9月下旬，CL1/CL60价差呈上升趋势，美国国债收益率呈下降趋势
+3，从2020年1月份开始，CL1/CL60价差与美国国债收益率均开始大幅下降，说明美国流感和疫情造成的严峻局势对此影响很大
+4，在2019年6月到7月中旬的时间里，美国国债收益率大致呈先上升后下降的趋势，而CL1/CL60价差呈先下降后上升的趋势，两者趋势截然相反
 """
